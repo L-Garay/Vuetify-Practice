@@ -12,13 +12,18 @@ export default {
       selectedTab: 'home'
     };
   },
+  mounted() {
+    const element = document.getElementById('home');
+    if (element) {
+      element.classList.add('active-tab');
+    }
+  },
   methods: {
     changeSelection(tab: string) {
       this.$emit('tabChanged', tab);
       const element = document.getElementById(tab);
       if (element) {
         element.classList.add('active-tab');
-        console.log('element', element, 'tab', tab);
         if (tab === 'home') {
           const start = document.getElementById('start');
           if (start) {
