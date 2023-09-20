@@ -6,11 +6,15 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "devServer": "tsx server/index.ts",
+    "nodemon": "nodemon devServer"
   },
   "dependencies": {
     "@hapi/hapi": "^21.3.2",
     "core-js": "^3.8.3",
+    "dotenv": "^16.3.1",
+    "mongodb": "6.1",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuetify": "^2.6.0"
@@ -38,6 +42,7 @@
     "sass": "^1.32.7",
     "sass-loader": "^12.0.0",
     "ts-jest": "^27.0.4",
+    "tsx": "^3.12.10",
     "typescript": "~4.5.5",
     "vue-cli-plugin-vuetify": "~2.5.8",
     "vue-template-compiler": "^2.6.14",
