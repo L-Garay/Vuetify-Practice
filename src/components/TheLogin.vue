@@ -1,5 +1,6 @@
 <script lang="ts">
-export default {
+import Vue from 'vue';
+export default Vue.extend({
   name: 'TheLogin',
   data() {
     return {
@@ -16,14 +17,15 @@ export default {
       element.classList.add('active-tab');
     }
   },
+  props: {},
   methods: {
-    login() {
+    login(): void {
       console.log(this.email, this.password);
     },
-    register() {
+    register(): void {
       console.log(this.email, this.password, this.firstName, this.lastName);
     },
-    changeSelection(tab: string) {
+    changeSelection(tab: string): void {
       this.tabSelected = tab;
       const element = document.getElementById(tab);
       if (element) {
@@ -42,7 +44,7 @@ export default {
       }
     }
   }
-};
+});
 </script>
 
 <template>

@@ -1,7 +1,8 @@
 <script lang="ts">
+import Vue from 'vue';
 import RightArrowThick from '../assets/icons/RightArrowThick.vue';
 import SpotifyLogo from '../assets/icons/SpotifyLogo.vue';
-export default {
+export default Vue.extend({
   name: 'GreetingVue',
   components: {
     RightArrowThick,
@@ -38,7 +39,7 @@ export default {
       }
     }
   }
-};
+});
 </script>
 
 <template>
