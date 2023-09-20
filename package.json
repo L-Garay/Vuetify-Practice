@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "devServer": "tsx server/index.ts",
+    "devServer": "tsx src/server/index.ts",
     "nodemon": "nodemon devServer"
   },
   "dependencies": {

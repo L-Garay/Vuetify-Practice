@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Hapi = require('@hapi/hapi');
-import { registerUser } from './controllers/UserController';
+import { loginUser, registerUser } from './controllers/UserController';
 import { connectDatabase } from './connectDatabase';
 
 const start = async () => {
@@ -18,7 +18,7 @@ const start = async () => {
   server.route({
     method: 'GET',
     path: '/',
-    handler: (request: any, h) => {
+    handler: (request: any, h: any) => {
       const response = h.response({ user: 'Hello World!' });
       response.header('Access-Control-Allow-Origin', '*');
       return response;
@@ -28,10 +28,36 @@ const start = async () => {
   server.route({
     method: 'POST',
     path: '/register',
-    handler: (request: any, h) => {
+    handler: async (request: any, h: any) => {
       console.log('request payload', request.payload);
-      const user = registerUser(request.payload);
+      const user = await registerUser(request.payload);
+      if (!user) {
+        const response = h.response({ error: 'User not created' });
+        response.type('application/json');
+        response.header('Access-Control-Allow-Origin', '*');
+        return response;
+      }
       console.log('user after register', user);
+      const response = h.response(user);
+      response.type('application/json');
+      response.header('Access-Control-Allow-Origin', '*');
+      return response;
+    }
+  });
+
+  server.route({
+    method: 'POST',
+    path: '/login',
+    handler: async (request: any, h: any) => {
+      console.log('request payload', request.payload);
+      const user = await loginUser(request.payload);
+      if (!user) {
+        const response = h.response({ error: 'Login failed, user not found' });
+        response.type('application/json');
+        response.header('Access-Control-Allow-Origin', '*');
+        return response;
+      }
+      console.log('user after login', user);
       const response = h.response(user);
       response.type('application/json');
       response.header('Access-Control-Allow-Origin', '*');
