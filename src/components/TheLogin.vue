@@ -19,8 +19,18 @@ export default Vue.extend({
   },
   props: {},
   methods: {
-    login(): void {
+    async login(): Promise<void> {
       console.log(this.email, this.password);
+      console.log(process.env.VUE_APP_SERVER_URL);
+      const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: this.email, password: this.password })
+      });
+      const data = await response.json();
+      console.log(data);
     },
     register(): void {
       console.log(this.email, this.password, this.firstName, this.lastName);
