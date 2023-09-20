@@ -1,5 +1,6 @@
 <script lang="ts">
 import Vue from 'vue';
+import { User } from '../constants/sharedTypes';
 export default Vue.extend({
   name: 'TheLogin',
   data() {
@@ -21,19 +22,51 @@ export default Vue.extend({
   methods: {
     async login(): Promise<void> {
       console.log(this.email, this.password);
-      console.log(process.env.VUE_APP_SERVER_URL);
+      const formData = {
+        email: this.email,
+        password: this.password
+      };
+      const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+      if (data.error) {
+        console.log('ERROR', data.error);
+        return;
+      } else {
+        console.log(data);
+      }
+    },
+    async register(): Promise<void> {
+      console.log(this.email, this.password, this.firstName, this.lastName);
+      const formData: User = {
+        email: this.email,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        createdPlaylists: [],
+        followedPlaylists: [],
+        followedArtsits: [],
+        favoritedSongs: []
+      };
       const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: this.email, password: this.password })
+        body: JSON.stringify(formData)
       });
       const data = await response.json();
-      console.log(data);
-    },
-    register(): void {
-      console.log(this.email, this.password, this.firstName, this.lastName);
+      if (data.error) {
+        console.log('ERROR', data.error);
+        return;
+      } else {
+        console.log(data);
+      }
     },
     changeSelection(tab: string): void {
       this.tabSelected = tab;
